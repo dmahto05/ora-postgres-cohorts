@@ -1,0 +1,6 @@
+ora2pg -t TABLE -c ora2pg_tst_number.conf -a TEST_INDEX_1
+
+ora2pg -t TABLE -c ora2pg_tst_number.conf -a TEST_INDEX_1,TEST_INDEX_2
+
+
+ora2pg -t TABLE -c ora2pg_tst_number.conf -a TEST_INDEX_1,TEST_INDEX_2 -o output.sql
