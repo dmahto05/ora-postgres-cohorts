@@ -4,3 +4,10 @@ ora2pg -t TABLE -c ora2pg_tst_number.conf -a TEST_INDEX_1,TEST_INDEX_2
 
 
 ora2pg -t TABLE -c ora2pg_tst_number.conf -a TEST_INDEX_1,TEST_INDEX_2 -o output.sql
+
+
+
+ora2pg -t TABLE -c ora2pg_tst_number.conf  -o dms_sample.sql
+
+--Run Test for Schema Validation
+ora2pg -t TEST -c ora2pg_tst_number.conf
