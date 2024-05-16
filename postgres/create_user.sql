@@ -1,0 +1,16 @@
+User Creation 
+
+create database dms_sample;
+
+CREATE USER dms_sample WITH PASSWORD '*********';
+REVOKE CREATE ON SCHEMA public FROM dms_sample;
+
+GRANT CONNECT ON DATABASE dms_sample TO dms_sample;
+GRANT USAGE, CREATE ON SCHEMA dms_sample TO dms_sample;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA dms_sample TO dms_sample;
+GRANT USAGE ON ALL SEQUENCES IN SCHEMA dms_sample TO dms_sample;
+
+
+
+ALTER DEFAULT PRIVILEGES IN SCHEMA dms_sample GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO dms_sample;
+ALTER DEFAULT PRIVILEGES IN SCHEMA dms_sample GRANT USAGE ON SEQUENCES TO dms_sample;
