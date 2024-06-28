@@ -20,3 +20,16 @@ ora2pg -t COPY -c ora2pg_tst_number.conf -a "PERSON" -j 2 -J 4 --where "ROWNUM <
 ora2pg -t COPY -c ora2pg_tst_number.conf -a "PERSON" -j 2 -J 2 -d
 ora2pg -t COPY -c ora2pg_tst_number.conf -a "PERSON" --where "ROWNUM < 11" -d
 ora2pg -t COPY -c ora2pg_tst_number.conf -a "EMPLOYEES" -d
+
+--Data Validation 
+--Create indexes in Parallel
+ora2pg -t LOAD -c ora2pg_tst_number.conf -j 2 -i INDEXES_ -d
+
+--Perform Data Validation
+ora2pg -t TEST_DATA -c ora2pg_tst_number.conf -J 10 -j 10
+
+--Compare View Data Count
+ora2pg -t TEST_VIEW -c ora2pg_tst_number.conf -J 2 -j 2
+
+--Compare Table Count
+ora2pg -t TEST_COUNT -c ora2pg_tst_number.conf -J 2 -j 2
