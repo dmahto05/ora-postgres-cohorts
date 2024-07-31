@@ -1,5 +1,5 @@
 WITH INPUT AS 
-                        (SELECT UPPER('DMS_SAMPLE') AS SCHEMANAME FROM DUAL) , 
+                        (SELECT UPPER('SAKILA') AS SCHEMANAME FROM DUAL) , 
                         ALIAS1 AS 
                         (SELECT /*+ MATERIALIZE */
                             alias1.owner,
@@ -169,10 +169,11 @@ WITH INPUT AS
                             4 DESC),
                         ALIAS2 AS 
                         (SELECT owner , table_name , "LOB?" ,  "PK", "LEADING_PK_NUMBER",  "SIZEGIGS", "LOBSIZE","NONLOBSIZE",num_rows_approx , avg_row_len , avg_rows_size_approx_kb , "PARTITION?"  , not_null_lob_constraint,
-                        trunc(("SIZEGIGS"/SUM("SIZEGIGS") OVER ())*100) as "TOP%" , trunc(("LOBSIZE"/SUM("LOBSIZE") OVER ())*100) "LOB%" , trunc(("NONLOBSIZE"/SUM("NONLOBSIZE") OVER ())*100)  "NONLOB%" , 
+                        	trunc(("SIZEGIGS" / CASE SUM("SIZEGIGS") OVER () WHEN 0 THEN 1 ELSE SUM("SIZEGIGS") OVER () END) * 100) as "TOP%",
+	trunc(("LOBSIZE" / CASE SUM("LOBSIZE") OVER () WHEN 0 THEN 1 ELSE SUM("LOBSIZE") OVER () END ) * 100) "LOB%",
+	trunc(("NONLOBSIZE" / CASE SUM("NONLOBSIZE") OVER () WHEN 0 THEN 1 ELSE SUM("NONLOBSIZE") OVER () END ) * 100) "NONLOB%",
                         ROW_NUMBER() OVER (ORDER BY "SIZEGIGS" DESC NULLS LAST) "RN_TOTALSIZE" , 
                         ROW_NUMBER() OVER (ORDER BY "LOBSIZE" DESC NULLS LAST) "RN_LOBSIZE",
                         ROW_NUMBER() OVER (ORDER BY "NONLOBSIZE" DESC NULLS LAST) "RN_NONLOBSIZE"
                         FROM ALIAS1)
-                        SELECT *
-                        FROM ALIAS2;
+                     SELECT * FROM ALIAS2;
